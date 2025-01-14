@@ -1,12 +1,11 @@
-# Flask App - DevOps Project Template
+Application Flask - Modèle de Projet DevOps
+Ce dépôt sert de modèle pour un projet DevOps simple basé sur Flask. L'application propose des fonctionnalités de calculatrice de base (addition et soustraction) et inclut tous les fichiers nécessaires pour configurer un environnement local, exécuter des tests et déployer l'application sur un service cloud en respectant les meilleures pratiques en DevOps.
 
-This repository serves as a template for a simple Flask-based DevOps project. The app provides basic calculator functionalities (addition and subtraction) and includes all necessary files for setting up a local environment, running tests, and deploying to a cloud service with best practices in DevOps.
+Structure du Projet
+Le dépôt est organisé comme suit :
 
-## Project Structure
-
-The repository is organized as follows:
-
-```plaintext
+plaintext
+Copier le code
 DEVOPS-PROJECT/
 ├── app.py
 ├── utils.py
@@ -17,72 +16,61 @@ DEVOPS-PROJECT/
 │   └── home.html
 ├── .env
 ├── .gitignore
-```
+Description des Fichiers
+app.py : Le fichier principal de l'application Flask. Il configure les routes et les connecte à des fonctions définies dans utils.py pour fournir des points de terminaison API pour les opérations de l'application.
 
-### File Descriptions
+utils.py : Contient des fonctions utilitaires pour les opérations principales comme l'addition et la soustraction. Ce fichier héberge la logique principale des fonctionnalités de l'application.
 
-- **`app.py`**: The main application file for the Flask app. It sets up routes and connects them to functions in `utils.py` to provide API endpoints for app operations.
+test.py : Un fichier de tests unitaires qui inclut des tests pour les fonctions définies dans utils.py. Ce fichier vérifie que les fonctionnalités principales fonctionnent comme prévu.
 
-- **`utils.py`**: Contains utility functions for core operations like addition and subtraction. This file is designed to house the main logic for the app’s functionality.
+requirements.txt : Répertorie les dépendances Python nécessaires pour exécuter l'application. Ce fichier est utilisé pour installer les packages requis dans l'environnement du projet.
 
-- **`test.py`**: A unit test file that includes tests for the functions defined in `utils.py`. This file ensures that the core functionality behaves as expected.
+Makefile : Un fichier make pour simplifier la configuration et les opérations du projet. Inclut des commandes pour :
 
-- **`requirements.txt`**: Lists the Python dependencies needed to run the application. This file is used to install the necessary packages in the project environment.
+make init : Installer les dépendances du projet.
+make run : Démarrer l'application Flask.
+make test : Exécuter tous les tests unitaires.
+templates/home.html : Modèle HTML pour l'interface utilisateur de l'application. Ce fichier propose des champs de saisie et des boutons pour interagir avec les opérations de la calculatrice.
 
-- **`Makefile`**: A makefile to streamline project setup and operations. Includes commands for:
-  - `make init`: Install project dependencies.
-  - `make run`: Start the Flask app.
-  - `make test`: Run all unit tests.
+.env : Un fichier de configuration pour les variables d'environnement. Il est utilisé pour stocker de manière sécurisée des informations sensibles (comme des clés API, des identifiants de base de données ou des paramètres spécifiques à un environnement). Note : Ce fichier ne doit pas être inclus dans le contrôle de version pour des raisons de sécurité.
 
-- **`templates/home.html`**: HTML template for the app's user interface. This file provides input fields and buttons for interacting with the calculator operations.
+.gitignore : Spécifie les fichiers et répertoires à ignorer par Git. Il inclut généralement des fichiers comme .env, des fichiers Python compilés (__pycache__), ainsi que des caches locaux d'environnement et de dépendances.
 
-- **`.env`**: A configuration file for environment variables. It’s used to securely store sensitive information (like API keys, database credentials, or environment-specific settings). **Note**: This file should not be committed to version control for security reasons.
+Démarrage
+Cloner le Dépôt :
 
-- **`.gitignore`**: Specifies files and directories that should be ignored by Git. It typically includes files such as `.env` and compiled Python files (`__pycache__`), as well as local environment and dependency caches.
+bash
+Copier le code
+git clone <repository-url>
+cd DEVOPS-PROJECT
+Configurer l'Environnement :
 
-## Getting Started
+Créez et activez un environnement virtuel (recommandé pour gérer les dépendances).
+Installez les dépendances :
+bash
+Copier le code
+make init
+Exécuter l'Application :
 
-1. **Clone the Repository**:
-   ```bash
-   git clone <repository-url>
-   cd DEVOPS-PROJECT
-   ```
+Démarrez localement l'application Flask :
+bash
+Copier le code
+make run
+Exécuter les Tests :
 
-2. **Set Up the Environment**:
-   - Create and activate a virtual environment (recommended for managing dependencies).
-   - Install the dependencies:
-     ```bash
-     make init
-     ```
+Lancez les tests unitaires pour vérifier les fonctionnalités :
+bash
+Copier le code
+make test
+Configuration Supplémentaire
+Variables d'Environnement :
+Utilisez le fichier .env pour stocker les configurations spécifiques à l'environnement ou les informations sensibles. Assurez-vous de garder ce fichier hors du contrôle de version en l'ajoutant à .gitignore.
+Instructions de Déploiement
+Pour le déploiement, configurez des pipelines CI/CD selon votre plateforme préférée (par exemple, GitHub Actions, Azure Pipelines). Ce modèle peut être utilisé avec des plateformes de déploiement cloud comme AWS, Azure ou Heroku pour une mise à l'échelle facile.
 
-3. **Run the Application**:
-   - Start the Flask app locally:
-     ```bash
-     make run
-     ```
+Utilisez pipeline.yaml comme modèle pour un pipeline de construction et de déploiement d'application sur Azure.
+Auteur
+Ce modèle a été créé par Ali Mokh et est destiné à servir de ressource pédagogique pour les projets DevOps impliquant des applications Flask.
 
-
-4. **Run Tests**:
-   - Execute unit tests to verify functionality:
-     ```bash
-     make test
-     ```
-
-## Additional Configuration
-
-- **Environment Variables**:
-  - Use the `.env` file to store any environment-specific configurations or sensitive information. Be sure to keep this file out of version control by listing it in `.gitignore`.
-
-## Deployment Instructions
-
-For deployment, configure CI/CD pipelines according to your preferred platform (e.g., GitHub Actions, Azure Pipelines). This template can be used with cloud deployment platforms like AWS, Azure, or Heroku for easy scalability.
-  - Use `pipeline.yaml` as a template for a pipeline to build and deploy an application on Azure
-
-## Author
-
-This template was created by **Ali Mokh** and is intended as an educational resource for DevOps projects involving Flask applications.
-
-## License and Usage
-
-This project template is open to use by anyone and may be freely adapted for personal or professional projects. If you use this template as part of teaching materials or educational content, please cite **Ali Mokh** as the original author.
-
+Licence et Utilisation
+Ce modèle de projet est libre d'utilisation et peut être adapté pour des projets personnels ou professionnels. Si vous utilisez ce modèle dans des supports pédagogiques ou du contenu éducatif, veuillez citer Ali Mokh comme auteur original

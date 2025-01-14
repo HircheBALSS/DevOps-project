@@ -1,29 +1,29 @@
-import unittest
-from utils import calculate_monthly_payment, calculate_total_cost
+import pytest
+from app import app
+from health_utils import calculate_bmi, calculate_bmr
 
-class TestLoanCalculatorUtils(unittest.TestCase):
-    def test_calculate_monthly_payment_with_interest(self):
-        loan_amount = 10000
-        duration_years = 5
-        annual_interest_rate = 5
-        expected_payment = 188.71
-        result = calculate_monthly_payment(loan_amount, duration_years, annual_interest_rate)
-        self.assertAlmostEqual(result, expected_payment, places=2)
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
 
-    def test_calculate_monthly_payment_no_interest(self):
-        loan_amount = 10000
-        duration_years = 5
-        annual_interest_rate = 0
-        expected_payment = 166.67
-        result = calculate_monthly_payment(loan_amount, duration_years, annual_interest_rate)
-        self.assertAlmostEqual(result, expected_payment, places=2)
+def test_bmr_calculation():
+    
+    male_bmr = calculate_bmr(175, 70, 30, "male")
+    female_bmr = calculate_bmr(165, 55, 25, "female")
+    assert round(male_bmr, 2) == 1695.67, f"Expected 1695.67 but got {male_bmr}"
+    assert round(female_bmr, 2) == 1359.10, f"Expected 1359.10 but got {female_bmr}"
 
-    def test_calculate_total_cost(self):
-        monthly_payment = 188.71
-        duration_years = 5
-        expected_total_cost = 11322.6
-        result = calculate_total_cost(monthly_payment, duration_years)
-        self.assertAlmostEqual(result, expected_total_cost, places=2)
-
-if __name__ == '__main__':
-    unittest.main()
+def test_bmr_endpoint(client):
+   
+    response = client.post('/bmr', json={
+        'height': 175,
+        'weight': 70,
+        'age': 30,
+        'gender': 'male'
+    })
+    assert response.status_code == 200, "Expected status code 200"
+    data = response.get_json()
+    assert 'bmr' in data, "Response missing 'bmr' key"
+    assert round(data['bmr'], 2) == 1695.67, f"Expected BMR 1695.67 but got {data['bmr']}"

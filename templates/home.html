@@ -1,55 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loan Calculator</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 500px; margin: auto; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input[type="number"] { width: 100%; padding: 8px; }
-        button { padding: 10px 20px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .result { margin-top: 20px; font-size: 1.1em; }
-    </style>
+    <title>Calculatrice BMI et BMR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h2>Loan Calculator</h2>
-        <div class="input-group">
-            <label for="loan_amount">Loan Amount ($)</label>
-            <input type="number" id="loan_amount" name="loan_amount" required>
-        </div>
-        <div class="input-group">
-            <label for="duration">Duration (years)</label>
-            <input type="number" id="duration" name="duration" required>
-        </div>
-        <div class="input-group">
-            <label for="interest_rate">Interest Rate (%)</label>
-            <input type="number" id="interest_rate" name="interest_rate" step="0.01" required>
-        </div>
-        <button onclick="calculateLoan()">Calculate</button>
+        <header>
+            <h1>Calculatrice BMI et BMR</h1>
+        </header>
 
-        <div class="result">
-            <p>Monthly Payment: $<span id="monthly_payment">0.00</span></p>
-            <p>Total Cost of Loan: $<span id="total_cost">0.00</span></p>
-        </div>
+        <section>
+            <h2>Calculer votre IMC</h2>
+            <form id="bmi-form">
+                <label for="height">Hauteur (mètres):</label>
+                <input type="number" step="any" id="height" required>
+
+                <label for="weight">Poids (kg):</label>
+                <input type="number" step="any" id="weight" required>
+
+                <button type="submit">Calculer l'IMC</button>
+            </form>
+
+            <div id="bmi-result" class="result"></div>
+        </section>
+
+        <section>
+            <h2>Calculer votre BMR</h2>
+            <form id="bmr-form">
+                <label for="height-bmr">Hauteur (cm):</label>
+                <input type="number" step="any" id="height-bmr" required>
+
+                <label for="weight-bmr">Poids (kg):</label>
+                <input type="number" step="any" id="weight-bmr" required>
+
+                <label for="age">Âge (années):</label>
+                <input type="number" id="age" required>
+
+                <label for="gender">Sexe:</label>
+                <select id="gender" required>
+                    <option value="male">Homme</option>
+                    <option value="female">Femme</option>
+                </select>
+
+                <button type="submit">Calculer le BMR</button>
+            </form>
+
+            <div id="bmr-result" class="result"></div>
+        </section>
     </div>
 
     <script>
-        function calculateLoan() {
-            const loan_amount = parseFloat(document.getElementById('loan_amount').value);
-            const duration = parseInt(document.getElementById('duration').value);
-            const interest_rate = parseFloat(document.getElementById('interest_rate').value);
+        // Fonction pour calculer l'IMC
+        document.getElementById('bmi-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let height = document.getElementById('height').value;
+            let weight = document.getElementById('weight').value;
 
-            $.post('/calculate', { loan_amount, duration, interest_rate }, function(data) {
-                $('#monthly_payment').text(data.monthly_payment.toFixed(2));
-                $('#total_cost').text(data.total_cost.toFixed(2));
+            fetch('/bmi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    height: height,
+                    weight: weight
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const bmiResultDiv = document.getElementById('bmi-result');
+                if (data.bmi) {
+                    bmiResultDiv.innerHTML = `Votre IMC est : ${data.bmi}`;
+                } else {
+                    bmiResultDiv.innerHTML = `Erreur : ${data.error}`;
+                }
             });
-        }
+        });
+
+        // Fonction pour calculer le BMR
+        document.getElementById('bmr-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let height = document.getElementById('height-bmr').value;
+            let weight = document.getElementById('weight-bmr').value;
+            let age = document.getElementById('age').value;
+            let gender = document.getElementById('gender').value;
+
+            fetch('/bmr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    height: height,
+                    weight: weight,
+                    age: age,
+                    gender: gender
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const bmrResultDiv = document.getElementById('bmr-result');
+                if (data.bmr) {
+                    bmrResultDiv.innerHTML = `Votre BMR est : ${data.bmr}`;
+                } else {
+                    bmrResultDiv.innerHTML = `Erreur : ${data.error}`;
+                }
+            });
+        });
     </script>
 </body>
 </html>
