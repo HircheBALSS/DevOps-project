@@ -33,7 +33,8 @@ run:
 	@echo "Le conteneur $(CONTAINER_NAME) est en cours d'exécution sur le port 5000."
 
 stop:
-	docker stop $(CONTAINER_NAME) || true
+	docker stop $(CONTAINER_NAME) 
+	true
 	docker rm $(CONTAINER_NAME) || true
 	@echo "Le conteneur $(CONTAINER_NAME) a été arrêté et supprimé."
 
