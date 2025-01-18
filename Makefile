@@ -11,7 +11,7 @@ help:
 	@echo "  make run          - Lance le conteneur Docker"
 	@echo "  make stop         - Arrête et supprime le conteneur Docker"
 	@echo "  make clean        - Supprime l'image Docker"
-	@echo "  make install      - installe les dépendances"
+	@echo "  make install      - installe les dépendances"$
 	@echo "  make test         - Exécute les tests unitaires"
 
 init:
