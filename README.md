@@ -1,76 +1,139 @@
-Application Flask - Modèle de Projet DevOps
-Ce dépôt sert de modèle pour un projet DevOps simple basé sur Flask. L'application propose des fonctionnalités de calculatrice de base (addition et soustraction) et inclut tous les fichiers nécessaires pour configurer un environnement local, exécuter des tests et déployer l'application sur un service cloud en respectant les meilleures pratiques en DevOps.
 
-Structure du Projet
-Le dépôt est organisé comme suit :
+Voici le README.md complet pour votre projet. Vous pouvez copier-coller ce contenu dans un fichier nommé README.md à la racine de votre projet.
 
-plaintext
-Copier le code
-DEVOPS-PROJECT/
-├── app.py
-├── utils.py
-├── test.py
-├── requirements.txt
-├── Makefile
-├── templates/
-│   └── home.html
-├── .env
-├── .gitignore
-Description des Fichiers
-app.py : Le fichier principal de l'application Flask. Il configure les routes et les connecte à des fonctions définies dans utils.py pour fournir des points de terminaison API pour les opérations de l'application.
+markdown
+Copier
+Modifier
+# Python Web Application - Azure Deployment
 
-utils.py : Contient des fonctions utilitaires pour les opérations principales comme l'addition et la soustraction. Ce fichier héberge la logique principale des fonctionnalités de l'application.
+This repository contains a Python web application for BMI and BMR calculations, developed using Flask and deployed to Microsoft Azure with Docker and GitHub Actions.
 
-test.py : Un fichier de tests unitaires qui inclut des tests pour les fonctions définies dans utils.py. Ce fichier vérifie que les fonctionnalités principales fonctionnent comme prévu.
+---
 
-requirements.txt : Répertorie les dépendances Python nécessaires pour exécuter l'application. Ce fichier est utilisé pour installer les packages requis dans l'environnement du projet.
+## Project Overview
 
-Makefile : Un fichier make pour simplifier la configuration et les opérations du projet. Inclut des commandes pour :
+- **Application Name**: `project-azure`
+- **Description**: A web app that allows users to calculate BMI and BMR interactively.
+- **Deployment**: Hosted on Microsoft Azure using App Service.
+- **CI/CD Pipeline**: Automated using GitHub Actions.
 
-make init : Installer les dépendances du projet.
-make run : Démarrer l'application Flask.
-make test : Exécuter tous les tests unitaires.
-templates/home.html : Modèle HTML pour l'interface utilisateur de l'application. Ce fichier propose des champs de saisie et des boutons pour interagir avec les opérations de la calculatrice.
+---
 
-.env : Un fichier de configuration pour les variables d'environnement. Il est utilisé pour stocker de manière sécurisée des informations sensibles (comme des clés API, des identifiants de base de données ou des paramètres spécifiques à un environnement). Note : Ce fichier ne doit pas être inclus dans le contrôle de version pour des raisons de sécurité.
+## Features
 
-.gitignore : Spécifie les fichiers et répertoires à ignorer par Git. Il inclut généralement des fichiers comme .env, des fichiers Python compilés (__pycache__), ainsi que des caches locaux d'environnement et de dépendances.
+- BMI (Body Mass Index) Calculator.
+- BMR (Basal Metabolic Rate) Calculator.
+- Interactive web interface using HTML and CSS.
+- Containerized deployment using Docker.
+- Automated CI/CD pipeline with testing and deployment workflows.
 
-Démarrage
-Cloner le Dépôt :
+---
+
+## Project Structure
+
+project-azure/ ├── app.py # Main application file ├── health_utils.py # Utility functions for BMI and BMR calculations ├── templates/ # HTML templates for the web interface │ ├── index.html # Homepage │ ├── bmi.html # BMI calculation page │ ├── bmr.html # BMR calculation page ├── static/ # Static files (CSS, JS, images) │ └── styles.css # Stylesheet for the app ├── tests/ # Unit tests │ ├── test_app.py # Tests for app routes │ ├── test_health_utils.py # Tests for utility functions ├── requirements.txt # Python dependencies ├── Dockerfile # Docker build configuration ├── Makefile # Automation commands └── .github/workflows/ # CI/CD configuration └── azure.yml # GitHub Actions workflow for Azure
+
+markdown
+Copier
+Modifier
+
+---
+
+## Prerequisites
+
+1. **Local Development**:
+   - Python 3.12 or higher installed.
+   - Docker installed.
+   - Virtual environment support (`venv`).
+
+2. **Azure Deployment**:
+   - An Azure account.
+   - Azure App Service created for hosting.
+   - Azure CLI installed (optional for manual testing).
+
+3. **GitHub Secrets**:
+   Add the following secrets to your repository for Azure deployment:
+   - `AZUREAPPSERVICE_CLIENTID`
+   - `AZUREAPPSERVICE_TENANTID`
+   - `AZUREAPPSERVICE_SUBSCRIPTIONID`
+
+---
+
+## Installation and Setup
+
+### Local Development
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/project-azure.git
+   cd project-azure
+Set up virtual environment:
 
 bash
-Copier le code
-git clone <repository-url>
-cd DEVOPS-PROJECT
-Configurer l'Environnement :
-
-Créez et activez un environnement virtuel (recommandé pour gérer les dépendances).
-Installez les dépendances :
-bash
-Copier le code
+Copier
+Modifier
 make init
-Exécuter l'Application :
+Run the app locally:
 
-Démarrez localement l'application Flask :
 bash
-Copier le code
-make run
-Exécuter les Tests :
+Copier
+Modifier
+python app.py
+Access the app: Open your browser and go to http://localhost:5000.
 
-Lancez les tests unitaires pour vérifier les fonctionnalités :
+Testing
+Run tests:
+
 bash
-Copier le code
+Copier
+Modifier
 make test
-Configuration Supplémentaire
-Variables d'Environnement :
-Utilisez le fichier .env pour stocker les configurations spécifiques à l'environnement ou les informations sensibles. Assurez-vous de garder ce fichier hors du contrôle de version en l'ajoutant à .gitignore.
-Instructions de Déploiement
-Pour le déploiement, configurez des pipelines CI/CD selon votre plateforme préférée (par exemple, GitHub Actions, Azure Pipelines). Ce modèle peut être utilisé avec des plateformes de déploiement cloud comme AWS, Azure ou Heroku pour une mise à l'échelle facile.
+Test coverage:
 
-Utilisez pipeline.yaml comme modèle pour un pipeline de construction et de déploiement d'application sur Azure.
-Auteur
-Ce modèle a été créé par Ali Mokh et est destiné à servir de ressource pédagogique pour les projets DevOps impliquant des applications Flask.
+Tests are provided for both utility functions (health_utils) and app routes.
+Deployment
+This project uses GitHub Actions for CI/CD.
 
-Licence et Utilisation
-Ce modèle de projet est libre d'utilisation et peut être adapté pour des projets personnels ou professionnels. Si vous utilisez ce modèle dans des supports pédagogiques ou du contenu éducatif, veuillez citer Ali Mokh comme auteur original
+Workflow Triggers
+Push to main branch: Automatically triggers the pipeline.
+Manual Trigger: Via GitHub's Actions UI.
+Deployment Steps
+CI/CD Workflow File: The workflow file .github/workflows/azure.yml includes:
+
+Building the Docker image.
+Running tests.
+Deploying the app to Azure App Service.
+Build Commands:
+
+Build Docker image:
+bash
+Copier
+Modifier
+make build
+Run the container locally:
+bash
+Copier
+Modifier
+make run
+Stop the container:
+bash
+Copier
+Modifier
+make stop
+Azure Deployment: The app is deployed to Azure App Service. Ensure your secrets are configured in GitHub.
+
+Makefile Commands
+Command	Description
+make init	Set up virtual environment and install dependencies.
+make build	Build the Docker image for the app.
+make run	Run the Docker container locally.
+make stop	Stop the running Docker container.
+make test	Run the test suite using pytest.
+make clean	Clean up Docker images and containers.
+Known Issues
+Missing Dependencies: If you encounter ModuleNotFoundError, ensure the virtual environment is activated:
+bash
+Copier
+Modifier
+source .venv/bin/activate
+Azure Deployment Failures: Verify secrets in GitHub and Azure App Service configurations.
